@@ -43,12 +43,12 @@ def bring(food):
     db = sqlite3.connect('rsvp.db')
     c = db.cursor()
     # you have to pass the argument as a variable in a one-element tuple form, using a comma
-    c.execute("SELECT name,food FROM reserved WHERE food=?", (food,))
+    c.execute("SELECT name FROM reserved WHERE food=?", (food,))
     data =  c.fetchall()
     print(len(data))
     c.close()
 
-    return template('going.tpl', data=data)
+    return template('going.tpl', data=data, food=food)
 
 
 run(host='localhost', reloader=True, port=8080)
