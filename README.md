@@ -16,14 +16,16 @@ The app implements routes using the [Bottle](https://bottlepy.org) web framework
 
 ## Database
 
-The app uses a SQLite database to store the information. The database is accessed from the app via connections, as needed. The two main operations are: add a user to the database (INSERT), and retrieve (SELECT) users for display in the attendees list, or list of attendees bringing a particular food. Before the database can be used it needs to be created and initialized with a table. For that, we run the following command: `python3 create_db.py` prior to running our app.
+The app uses a SQLite database to store the information. The database is accessed from the app via connections, as needed. The two main operations are: add a user to the database (`INSERT`), and retrieve (`SELECT`) users for display in the attendees list, or list of attendees bringing a particular food. Before the database can be used it needs to be created (in this case `rsvp.db`) and initialized with a table (which we named `reserved`). To create our database and our table, we run the following command once: `python3 create_db.py` prior to running our app.
 
 ## Templates
 
-The app uses Bottle's default Simple Template Engine. The header and the footer are stored in their own templates, which can be called by any other template. That way, if there are any changes to the header or footer we only have to change those pages instead of every page of our site. 
+The app uses Bottle's default Simple Template Engine. The `header` and the `footer` are stored in their own templates, which can be called by any other template. That way, if there are any changes to the header or footer we only have to change those pages instead of every page of our site. 
 
 The `index.tpl` displays the main page of our application, containing an HTML form to capture information from the user. The form implements three types of input: text input, drop down menu and radio buttons. We capture information and send it to the app via Bottle's `request` object.
 
-Our `going.tpl` template shows an implementation of a python `for` loop and `if` statements, to generate the `<li>` elements on the list of attendees. `for` loops, as well as `while` loops and `if-else` statements, need to be preceded by `%` and closed with `% end` in order to work. Important note: you don't need to use curly brackets around the variables in loops and conditional statements, only in the HTML.
+The `registered.tpl` displays a confirmation message after users successfully rsvp for the event.
+
+The `going.tpl` template shows an implementation of a python `for` loop and `if` statements, to generate the `<li>` elements on a list of attendees. `for` loops, as well as `while` loops and `if-else` statements, need to be preceded by `%` and closed with `% end` in order to work. **Important note**: you don't need to use curly brackets around the variables in loops and conditional statements, only in the HTML.
 
 Note that we are using the `going.tpl` template for two different views: the attendee list, and the different food specific pages listing the people bringing that food. We implemented this using `if-else` conditions that evaluate the length of the arguments passed to the template: if length is 3, we can assume we need to display the list of attendees. If we only pass the name of the person and the food type, we can asume we need to display the contents of the food specific view. Notice also that we print a specific message when nobody is bringing a particular food (e.g. "So far, nobody is bringing salad :\").
